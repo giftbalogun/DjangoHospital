@@ -1,0 +1,79 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="appointment-form">
+                    <form action="{% url 'index' %}" method="post">
+                        {% csrf_token %}
+                        <div class="messages">
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-30">
+                                        <input type="text" name="bname" class="form-control" placeholder="Your Name"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-30">
+                                        <input type="text" name="bphone" class="form-control" placeholder="Your Phone"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-30">
+                                        <input type="email" name="bemail" class="form-control" placeholder="Your Email"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-30">
+                                        <input type="text" name="baddress" class="form-control"
+                                            placeholder="Your Address">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-30">
+                                        <select name="bscheldule" class="form-control">
+                                            <option value="Choose Your Scheldule">Choose Your Scheldule</option>
+                                            <option value="9 AM to 10 AM">9 AM to 10 AM</option>
+                                            <option value="11 AM to 12 PM">11 AM to 12 PM</option>
+                                            <option value="2 PM to 4 PM">2 PM to 4 PM</option>
+                                            <option value="8 PM to 10 PM">8 PM to 10 PM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb-30">
+                                        <textarea name="bmessage" class="form-control"
+                                            placeholder="Your Message"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn dento-btn">Booking Now</button>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
