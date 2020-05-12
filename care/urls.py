@@ -17,13 +17,14 @@ from django.urls import path
 
 from django.views.generic import TemplateView
 from care.views import SendBookingEmail, SendContactEmail
-from care.views import index, search, blog_list, blog_detail, contact
+from care.views import index, about, search, blog_list, blog_detail, contact
 
 from emailing.views import subscribe
 from emailing.views import email_list_signup
 
 urlpatterns = [
     path('', index, name="index"),
+    path('about/', about, name="about"),
     path('search/', search, name='search'),
     path('blog', blog_list, name='blog'),
     path('blog/<id>/', blog_detail, name='blog-details'),

@@ -50,10 +50,9 @@
                         <div class="top-header-content">
                             <a href="#" data-toggle="tooltip" data-placement="bottom"
                                 title="28 Jackson Street, Chicago, 7788569 USA"><i class="fa fa-map-marker"></i>
-                                <span>28 Jackson
-                                    Street, Chicago, 7788569 USA</span></a>
+                                <span>26 Iwowari Avenue, Abuloma 500221, Port Harcourt</span></a>
                             <a href="#" data-toggle="tooltip" data-placement="bottom" title="info.dento@gmail.com"><i
-                                    class="fa fa-envelope"></i> <span>info.dento@gmail.com</span></a>
+                                    class="fa fa-envelope"></i> <span>primavie@gmail.com</span></a>
                         </div>
                     </div>
                     <!-- Top Header Social Info -->
@@ -107,7 +106,7 @@
                                     <li><a href="#">Pages</a>
                                         <ul class="dropdown">
                                             <li><a href="{% url 'index' %}">- Home</a></li>
-                                            <li><a href="about.html">- About Us</a></li>
+                                            <li><a href="{% url 'about' %}">- About Us</a></li>
                                             <li><a href="service.html">- Service</a></li>
                                             <li><a href="pricing.html">- Pricing</a></li>
                                             <li><a href="{% url 'blog' %}">- Blog</a></li>
@@ -130,7 +129,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li><a href="about.html">About</a></li>
+                                    <li><a href="{% url 'about' %}">About</a></li>
                                     <li><a href="service.html">Service</a></li>
                                     <li><a href="pricing.html">Pricing</a></li>
                                     <li><a href="{% url 'blog' %}">Blog</a></li>
@@ -142,7 +141,7 @@
 
                         <!-- Booking Now Button -->
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn dento-btn booking-btn" data-toggle="modal">Booking Now</button>
+                        <a type="button" class="btn dento-btn booking-btn" href="{% url 'index' %}">Booking Now</a>
                     </nav>
 
                 </div>

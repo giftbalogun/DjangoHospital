@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
+    'crispy_forms',
     'care',
     'doctor',
     'emailing',
@@ -148,3 +148,5 @@ EMAIL_PORT = '2525'
 MAILCHIMP_API_KEY = ''
 MAILCHIMP_DATA_CENTER = ''
 MAILCHIMP_EMAIL_LIST_ID = ''
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

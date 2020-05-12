@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load crispy_forms_tags %}
 {% block content %}
 <!-- ***** Breadcrumb Area Start ***** -->
 <div class="breadcumb-area bg-img bg-gradient-overlay" style="background-image: url(img/bg-img/12.jpg);">
@@ -34,14 +35,14 @@
       <div class="col-12 col-lg-8 mb-100">
         <!-- Blog Details Area -->
         <div class="blog-details-area">
-          <img src="{{ post.photo_main.url }}" alt="">
+          <img src="{{ blog.photo_main.url }}" alt="">
 
-          <h2 class="post-title">{{ post.title }}</h2>
+          <h2 class="post-title">{{ blog.title }}</h2>
           <div class="post-meta">
-            <a href="#"><i class="icon_clock_alt"></i> {{ post.timestamp|timesince }}</a>
+            <a href="#"><i class="icon_clock_alt"></i> {{ blog.timestamp|timesince }}</a>
             <a href="#"><i class="icon_chat_alt"></i> 3 Comments</a>
           </div>
-          <p>{{ post.overview | safe }}</p>
+          <p>{{ blog.overview | safe }}</p>
           <blockquote cite="" class="dento-blockquote d-flex">
             <div class="icon">
               <i class="fa fa-quote-left"></i>
@@ -52,7 +53,7 @@
               <h6>Geoffrey Canada / <span>Social Activist</span></h6>
             </div>
           </blockquote>
-          <p>{{ post.content | safe }}</p>
+          <p>{{ blog.content | safe }}</p>
         </div>
 
         <!-- Post Share  -->
@@ -65,8 +66,9 @@
 
         <!-- Comments Area -->
         <div class="comment_area clearfix">
-          <h5 class="title">3 Comments</h5>
+          <h5 class="title"> Comments</h5>
 
+          {% for comment in comments %}
           <ol>
             <!-- Single Comment Area -->
             <li class="single_comment_area">
@@ -78,37 +80,34 @@
                 </div>
                 <!-- Comment Meta -->
                 <div class="comment-meta">
-                  <a href="#" class="post-author">Jonny Evans / <span>28 Sep 2018 at 11:00 am</span></a>
-                  <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sitdown ameto, consectetur, adipisci
-                    velit, sed quiata non numqua eius modi tempor incidunt ut labore.</p>
+                  <a href="#" class="post-author">{{ comment.name }} / <span>{{ comment.created_on }}</span></a>
+                  <p>{{ comment.body | linebreaks }}</p>
                 </div>
               </div>
             </li>
           </ol>
+          {% endfor %}
         </div>
 
         <!-- Leave A Reply -->
         <div class="contact-form mt-30">
           <h5 class="mb-30">Leave A Reply</h5>
-
+          {% if new_comment %}
+          <div class="alert alert-success" role="alert">
+            Your comment is awaiting moderation
+          </div>
+          {% else %}
           <!-- Form -->
-          <form action="#" method="post">
+          <form action="." method="post">
+            {% csrf_token %}
+            {{ comment_form | crispy }}
             <div class="row">
-              <div class="col-lg-6">
-                <input type="text" name="message-name" class="form-control mb-30" placeholder="Your Name">
-              </div>
-              <div class="col-lg-6">
-                <input type="email" name="message-email" class="form-control mb-30" placeholder="Your Email">
-              </div>
-              <div class="col-12">
-                <textarea name="message" class="form-control mb-30" placeholder="Your Message"></textarea>
-              </div>
               <div class="col-12">
                 <button type="submit" class="btn dento-btn">Reply</button>
               </div>
             </div>
           </form>
-
+          {% endif %}
         </div>
       </div>
 

@@ -13,6 +13,8 @@ from django.db.models import Count, Q
 from emailing.forms import EmailSignupForm
 from emailing.models import Emailing
 
+from .forms import CommentForm
+
 form = EmailSignupForm()
 
 
@@ -106,6 +108,13 @@ def blog_list(request):
     except EmptyPage:
         paginated_queryset = paginator.page(paginator.num_pages)
 
+    if request.method == "POST":
+        email = request.POST["email"]
+        new_signup = Emailing()
+        new_signup.email = email
+        new_signup.save()
+        messages.success(request, "Successfully subscribed")
+
     context = {
         'queryset': paginated_queryset,
         'most_recent': most_recent,
@@ -119,12 +128,32 @@ def blog_list(request):
 def blog_detail(request, id):
     category_count = get_category_count()
     most_recent = Blog.objects.order_by('-timestamp')[:3]
-    post = get_object_or_404(Blog, id=id)
+    blog = get_object_or_404(Blog, id=id)
+
+    comments = blog.comments.filter(active=True)
+    new_comment = None
+
+    # Comment posted
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            # Create Comment object but don't save to database yet
+            new_comment = comment_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.blog = blog
+            # Save the comment to the database
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
 
     context = {
-        'post': post,
+        'blog': blog,
         'most_recent': most_recent,
         'category_count': category_count,
+
+        'comments': comments,
+        'new_comment': new_comment,
+        'comment_form': comment_form
 
     }
     return render(request, 'blog-details.html', context)
@@ -158,9 +187,29 @@ def contact(request):
         new_signup = Emailing()
         new_signup.email = email
         new_signup.save()
+        messages.success(request, "Successfully subscribed")
 
     context = {
         'form': form
     }
 
     return render(request, 'contact.html', context)
+
+
+def about(request):
+    doctor = Doctor.objects.order_by('-name')
+
+    if request.method == "POST":
+        email = request.POST["email"]
+        new_signup = Emailing()
+        new_signup.email = email
+        new_signup.save()
+        messages.success(request, "Successfully subscribed")
+
+    context = {
+        'latest': latest,
+        'doctor': doctor,
+        'form': form
+    }
+
+    return render(request, 'about.html', context)
