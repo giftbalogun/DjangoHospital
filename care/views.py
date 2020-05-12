@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 
 from care.models import Blog
 from doctor.models import Doctor
+from fact.models import Fact
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count, Q
 
@@ -63,9 +64,9 @@ class SendBookingEmail(View):
             'Message: ' + message + ',\n' +
             'Phone: ' + phone + ',\n' +
             'Schedule: ' + scheldule,
-            'blgnbalogun53@gmail.com',  # Admin
+            'balogunigift@aol.com',  # Admin
             [
-                email,
+                email, 'blgnbalogun53@gmail.com',
             ]
         )
 
@@ -77,6 +78,7 @@ class SendBookingEmail(View):
 def index(request):
     latest = Blog.objects.order_by('-timestamp')[0:3]
     doctor = Doctor.objects.order_by('-name')
+    fact = Fact.objects.order_by('-name')
 
     if request.method == "POST":
         email = request.POST["email"]
@@ -88,6 +90,7 @@ def index(request):
     context = {
         'latest': latest,
         'doctor': doctor,
+        'fact': fact,
         'form': form
     }
 
@@ -170,9 +173,9 @@ class SendContactEmail(View):
         send_mail(
             'Contact Message from: ' + name,
             'Message: ' + message + ',\n',
-            'blgnbalogun53@gmail.com',  # Admin
+            'balogunigift@aol.com',  # Admin
             [
-                email,
+                email, 'blgnbalogun53@gmail.com'
             ]
         )
         # Redirect to same page after form submit
@@ -198,6 +201,7 @@ def contact(request):
 
 def about(request):
     doctor = Doctor.objects.order_by('-name')
+    fact = Fact.objects.order_by('-name')
 
     if request.method == "POST":
         email = request.POST["email"]
@@ -207,8 +211,8 @@ def about(request):
         messages.success(request, "Successfully subscribed")
 
     context = {
-        'latest': latest,
         'doctor': doctor,
+        'fact': fact,
         'form': form
     }
 

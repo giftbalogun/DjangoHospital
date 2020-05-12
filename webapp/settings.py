@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'care',
     'doctor',
     'emailing',
+    'fact',
 ]
 
 MIDDLEWARE = [
@@ -139,11 +140,13 @@ MESSAGE_TAGS = {
 }
 
 # This will display email in Console.
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.aol.com'
+EMAIL_HOST_USER = 'balogunigift@aol.com'
+EMAIL_HOST_PASSWORD = 'ehmmgdomfmgdqems'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = '20b603b09b2ce3'
-EMAIL_HOST_PASSWORD = 'f39018500518fd'
-EMAIL_PORT = '2525'
+
 
 MAILCHIMP_API_KEY = ''
 MAILCHIMP_DATA_CENTER = ''
