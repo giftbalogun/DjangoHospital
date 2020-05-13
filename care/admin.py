@@ -3,6 +3,8 @@ from .models import Blog, Category, Comment
 
 # Register your models here.
 
+admin.site.site_header = 'PrimaVie Pharmacy Care'
+
 admin.site.register(Blog)
 admin.site.register(Category)
 

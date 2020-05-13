@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=C:\xampp\htdocs\hospitalcare\env"
+set "VIRTUAL_ENV=C:\xampp\htdocs\DjangoHospital\env"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
