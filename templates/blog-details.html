@@ -1,166 +1,162 @@
-{% extends "base.html" %}
-{% load static %}
-{% load crispy_forms_tags %}
-{% block content %}
+{% extends "base.html" %} {% load static %} {% load crispy_forms_tags %} {% block content %}
 <!-- ***** Breadcrumb Area Start ***** -->
 <div class="breadcumb-area bg-img bg-gradient-overlay" style="background-image: url(img/bg-img/12.jpg);">
-  <div class="container h-100">
-    <div class="row h-100 align-items-center">
-      <div class="col-12">
-        <h2 class="title">Blog Details</h2>
-      </div>
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <h2 class="title">Blog Details</h2>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div class="breadcumb--con">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Blog Details</li>
-          </ol>
-        </nav>
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Blog Details</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!-- ***** Breadcrumb Area End ***** -->
 
 <!-- ****** Blog Area Start ******* -->
 <section class="dento--blog-area mt-50">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-lg-8 mb-100">
-        <!-- Blog Details Area -->
-        <div class="blog-details-area">
-          <img src="{{ blog.photo_main.url }}" alt="">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-8 mb-100">
+                <!-- Blog Details Area -->
+                <div class="blog-details-area">
+                    <img src="{{ blog.photo_main.url }}" alt="">
 
-          <h2 class="post-title">{{ blog.title }}</h2>
-          <div class="post-meta">
-            <a href="#"><i class="icon_clock_alt"></i> {{ blog.timestamp|timesince }}</a>
-            <a href="#"><i class="icon_chat_alt"></i> 3 Comments</a>
-          </div>
-          <p>{{ blog.overview | safe }}</p>
-          <blockquote cite="" class="dento-blockquote d-flex">
-            <div class="icon">
-              <i class="fa fa-quote-left"></i>
-            </div>
-            <div class="text">
-              <h5>Good dental care doesn't make you a good student, but if your tooth hurts, it's hard to be a good
-                student</h5>
-              <h6>Geoffrey Canada / <span>Social Activist</span></h6>
-            </div>
-          </blockquote>
-          <p>{{ blog.content | safe }}</p>
-        </div>
-
-        <!-- Post Share  -->
-        <div class="post-share-area mb-30">
-          <a href="#" class="facebook"><i class="fa fa-facebook"></i> Share</a>
-          <a href="#" class="tweet"><i class="fa fa-twitter"></i> Tweet</a>
-          <a href="#" class="google-plus"><i class="fa fa-google-plus"></i> Share</a>
-          <a href="#" class="pinterest"><i class="fa fa-pinterest"></i> Share</a>
-        </div>
-
-        <!-- Comments Area -->
-        <div class="comment_area clearfix">
-          <h5 class="title"> Comments</h5>
-
-          {% for comment in comments %}
-          <ol>
-            <!-- Single Comment Area -->
-            <li class="single_comment_area">
-              <!-- Comment Content -->
-              <div class="comment-content d-flex">
-                <!-- Comment Author -->
-                <div class="comment-author">
-                  <img src="{% static 'img/bg-img/28.jpg' %}" alt="author">
+                    <h2 class="post-title">{{ blog.title }}</h2>
+                    <div class="post-meta">
+                        <a href="#"><i class="icon_clock_alt"></i> {{ blog.timestamp|timesince }}</a>
+                        <a href="#"><i class="icon_chat_alt"></i> 3 Comments</a>
+                    </div>
+                    <p>{{ blog.overview | safe }}</p>
+                    <blockquote cite="" class="dento-blockquote d-flex">
+                        <div class="icon">
+                            <i class="fa fa-quote-left"></i>
+                        </div>
+                        <div class="text">
+                            <h5>Good dental care doesn't make you a good student, but if your tooth hurts, it's hard to be a good student
+                            </h5>
+                            <h6>Geoffrey Canada / <span>Social Activist</span></h6>
+                        </div>
+                    </blockquote>
+                    <p>{{ blog.content | safe }}</p>
                 </div>
-                <!-- Comment Meta -->
-                <div class="comment-meta">
-                  <a href="#" class="post-author">{{ comment.name }} / <span>{{ comment.created_on }}</span></a>
-                  <p>{{ comment.body | linebreaks }}</p>
+
+                <!-- Post Share  -->
+                <div class="post-share-area mb-30">
+                    <a href="#" class="facebook"><i class="fa fa-facebook"></i> Share</a>
+                    <a href="#" class="tweet"><i class="fa fa-twitter"></i> Tweet</a>
+                    <a href="#" class="google-plus"><i class="fa fa-google-plus"></i> Share</a>
+                    <a href="#" class="pinterest"><i class="fa fa-pinterest"></i> Share</a>
                 </div>
-              </div>
-            </li>
-          </ol>
-          {% endfor %}
-        </div>
 
-        <!-- Leave A Reply -->
-        <div class="contact-form mt-30">
-          <h5 class="mb-30">Leave A Reply</h5>
-          {% if new_comment %}
-          <div class="alert alert-success" role="alert">
-            Your comment is awaiting moderation
-          </div>
-          {% else %}
-          <!-- Form -->
-          <form action="." method="post">
-            {% csrf_token %}
-            {{ comment_form | crispy }}
-            <div class="row">
-              <div class="col-12">
-                <button type="submit" class="btn dento-btn">Reply</button>
-              </div>
-            </div>
-          </form>
-          {% endif %}
-        </div>
-      </div>
+                <!-- Comments Area -->
+                <div class="comment_area clearfix">
+                    <h5 class="title"> Comments</h5>
 
-      <!-- Dento Sidebar Area -->
-      <div class="col-12 col-lg-4">
-        <div class="dento-sidebar">
+                    {% for comment in comments %}
+                    <ol>
+                        <!-- Single Comment Area -->
+                        <li class="single_comment_area">
+                            <!-- Comment Content -->
+                            <div class="comment-content d-flex">
+                                <!-- Comment Author -->
+                                <div class="comment-author">
+                                    <img src="{% static 'img/bg-img/28.jpg' %}" alt="author">
+                                </div>
+                                <!-- Comment Meta -->
+                                <div class="comment-meta">
+                                    <a href="#" class="post-author">{{ comment.name }} / <span>{{ comment.created_on }}</span></a>
+                                    <p>{{ comment.body | linebreaks }}</p>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                    {% endfor %}
+                </div>
 
-          <!-- Single Widget Area -->
-          <div class="single-widget-area search-widget">
-            <form action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
-              <input type="search" name="q" class="form-control" placeholder="Search ...">
-              <button type="submit"><i class="icon_search"></i></button>
-            </form>
-          </div>
-
-          <!-- Single Widget Area -->
-          <div class="single-widget-area catagories-widget">
-            <h5 class="widget-title">Categories</h5>
-
-            <!-- catagories list -->
-            <ul class="catagories-list">
-              {% for cat in category_count %}
-              <li><a href="#">{{ cat.categories__title }}</a></li>
-              {% endfor %}
-            </ul>
-          </div>
-
-          <!-- Single Widget Area -->
-          <div class="single-widget-area news-widget">
-            <h5 class="widget-title">Recent News</h5>
-
-            {% for post in most_recent %}
-            <!-- Single News Area -->
-            <div class="single-news-area d-flex align-items-center">
-              <div class="blog-thumbnail">
-                <img src="{{ post.photo_main.url }}" alt="">
-              </div>
-              <div class="blog-content">
-                <a href="#" class="post-title">{{ post.title }}</a>
-                <span class="post-date">{{ post.timestamp }}</span>
-              </div>
-            </div>
-            {% endfor %}
-
-            <!-- Single Widget Area -->
-            <div class="single-widget-area adds-widget">
-              <a href="#"><img class="w-100" src="./img/bg-img/adds.png" alt=""></a>
+                <!-- Leave A Reply -->
+                <div class="contact-form mt-30">
+                    <h5 class="mb-30">Leave A Reply</h5>
+                    {% if new_comment %}
+                    <div class="alert alert-success" role="alert">
+                        Your comment is awaiting moderation
+                    </div>
+                    {% else %}
+                    <!-- Form -->
+                    <form action="." method="post">
+                        {% csrf_token %} {{ comment_form | crispy }}
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn dento-btn">Reply</button>
+                            </div>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
             </div>
 
-          </div>
+            <!-- Dento Sidebar Area -->
+            <div class="col-12 col-lg-4">
+                <div class="dento-sidebar">
+
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area search-widget">
+                        <form action="{% url 'search' %}" method="GET" value="{{request.GET.q}}">
+                            <input type="search" name="q" class="form-control" placeholder="Search ...">
+                            <button type="submit"><i class="icon_search"></i></button>
+                        </form>
+                    </div>
+
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area catagories-widget">
+                        <h5 class="widget-title">Categories</h5>
+
+                        <!-- catagories list -->
+                        <ul class="catagories-list">
+                            {% for cat in category_count %}
+                            <li><a href="#">{{ cat.categories__title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Single Widget Area -->
+                    <div class="single-widget-area news-widget">
+                        <h5 class="widget-title">Recent News</h5>
+
+                        {% for post in most_recent %}
+                        <!-- Single News Area -->
+                        <div class="single-news-area d-flex align-items-center">
+                            <div class="blog-thumbnail">
+                                <img src="{{ post.photo_main.url }}" alt="">
+                            </div>
+                            <div class="blog-content">
+                                <a href="#" class="post-title">{{ post.title }}</a>
+                                <span class="post-date">{{ post.timestamp }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <!-- Single Widget Area -->
+                        <div class="single-widget-area adds-widget">
+                            <a href="#"><img class="w-100" src="./img/bg-img/adds.png" alt=""></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 </section>
 <!-- ****** Blog Area End ******* -->
 

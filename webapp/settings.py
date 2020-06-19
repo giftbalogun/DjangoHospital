@@ -12,6 +12,15 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from django.contrib.messages import constants as messages
+import environ
+from django.urls import reverse_lazy
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +30,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qrm_n&mv$e+!i-(!^c$-@@3%q2*+7+j1k5#g=96e%eez*_mn!y'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -54,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'webapp.urls'
@@ -143,9 +153,9 @@ MESSAGE_TAGS = {
 # This will display email in Console.
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST = 'smtp.aol.com'
-EMAIL_HOST_USER = 'balogunigift@aol.com'
-EMAIL_HOST_PASSWORD = 'ehmmgdomfmgdqems'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
@@ -154,3 +164,54 @@ MAILCHIMP_DATA_CENTER = ''
 MAILCHIMP_EMAIL_LIST_ID = ''
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+STATICFILES_STORAGE = 'webapp.storage.WhiteNoiseStaticFilesStorage'
+
+# E-mail address that error messages come from.
+SERVER_EMAIL = "hellgifto@giftbalogun.name.ng"
+
+# Default email address to use for various automated correspondence from
+# the site managers. Used for registration emails.
+DEFAULT_FROM_EMAIL = "hellogift@giftbalogun.name.ng"
+
+# Title of site to use
+SITE_TITLE = "Hospital"
+
+# Whether site uses https
+ENABLE_HTTPS = False
+
+# Use HTTPS when creating redirect URLs for social authentication, see
+# documentation for more details:
+# https://python-social-auth-docs.readthedocs.io/en/latest/configuration/settings.html#processing-redirects-and-urlopen
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = ENABLE_HTTPS
+
+# Make CSRF cookie HttpOnly, see documentation for more details:
+# https://docs.djangoproject.com/en/1.11/ref/settings/#csrf-cookie-httponly
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SECURE = ENABLE_HTTPS
+# Store CSRF token in session
+CSRF_USE_SESSIONS = True
+# Customize CSRF failure view
+CSRF_FAILURE_VIEW = "care.trans.views.error.csrf_failure"
+SESSION_COOKIE_SECURE = ENABLE_HTTPS
+# SSL redirect
+SECURE_SSL_REDIRECT = ENABLE_HTTPS
+# Sent referrrer only for same origin links
+SECURE_REFERRER_POLICY = "same-origin"
+# SSL redirect URL exemption list
+# Allowing HTTP access to health check
+SECURE_REDIRECT_EXEMPT = (r"healthz/$",)
+# Session cookie age (in seconds)
+SESSION_COOKIE_AGE = 1209600
+# Increase allowed upload size
+DATA_UPLOAD_MAX_MEMORY_SIZE = 50000000
+
+# Some security headers
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = "DENY"
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Optionally enable HSTS
+SECURE_HSTS_SECONDS = 0
+SECURE_HSTS_PRELOAD = False
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False

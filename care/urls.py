@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.urls import path
 
-from django.views.generic import TemplateView
 from care.views import SendBookingEmail, SendContactEmail
 from care.views import index, about, search, blog_list, blog_detail, contact
 

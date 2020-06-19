@@ -15,8 +15,30 @@ from emailing.forms import EmailSignupForm
 from emailing.models import Emailing
 
 from .forms import CommentForm
+from django.http import HttpResponse
+
 
 form = EmailSignupForm()
+
+
+def handler404(request, exception=None):
+    data = {"name": "ThePythonDjango.com"}
+    return render(request, 'includes/404.html', data)
+
+
+def handler400(request, exception=None):
+    data = {"name": "ThePythonDjango.com"}
+    return render(request, 'includes/400.html', data)
+
+
+def handler403(request, exception=None):
+    data = {"name": "ThePythonDjango.com"}
+    return render(request, 'includes/403.html', data)
+
+
+def handler500(request, exception=None):
+    data = {"name": "ThePythonDjango.com"}
+    return render(request, 'includes/500.html', data)
 
 
 def search(request):
@@ -153,7 +175,6 @@ def blog_detail(request, id):
         'blog': blog,
         'most_recent': most_recent,
         'category_count': category_count,
-
         'comments': comments,
         'new_comment': new_comment,
         'comment_form': comment_form
